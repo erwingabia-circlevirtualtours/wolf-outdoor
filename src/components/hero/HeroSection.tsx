@@ -17,7 +17,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
       {/* High-Resolution Mt. Ulanin Background Banner with Measured Scrim */}
       <div className="absolute inset-0 z-0">
         <img
-          src="/src/assets/images/mt_ulanin_summit_hero_1793274334661.jpg"
+          src="/images/mt_ulanin_summit_hero.jpg"
           alt="Mt. Ulanin 710 MASL Summit View in Brgy. Cumba Batangas City"
           referrerPolicy="no-referrer"
           className="w-full h-full object-cover object-center scale-105 transform motion-safe:transition-transform motion-safe:duration-1000"

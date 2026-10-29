@@ -54,7 +54,7 @@ export const CampFestCenter: React.FC<CampFestCenterProps> = ({
         <div className="relative rounded-2xl overflow-hidden border border-[#273040] bg-[#141820] mb-14">
           <div className="relative aspect-[16/9] md:aspect-[21/9] w-full overflow-hidden">
             <img
-              src="/src/assets/images/camp_fest_event_banner_1793274335544.jpg"
+              src="/images/camp_fest_event_banner.jpg"
               alt="Mt. Ulanin Camp Fest 2026 Twilight Summit"
               referrerPolicy="no-referrer"
               className="w-full h-full object-cover"

@@ -65,10 +65,10 @@ export const MtUlaninOverview: React.FC = () => {
               <img
                 src={
                   activeTab === 'views'
-                    ? '/src/assets/images/contest_sea_view_1793274395258.jpg'
+                    ? '/images/contest_sea_view.jpg'
                     : activeTab === 'habitat'
-                    ? '/src/assets/images/wolf_ripstop_hammock_1793274337239.jpg'
-                    : '/src/assets/images/mt_ulanin_summit_hero_1793274334661.jpg'
+                    ? '/images/wolf_ripstop_hammock.jpg'
+                    : '/images/mt_ulanin_summit_hero.jpg'
                 }
                 alt="Mt. Ulanin Landscape in Brgy. Cumba"
                 referrerPolicy="no-referrer"

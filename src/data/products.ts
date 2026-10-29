@@ -29,7 +29,7 @@ export const OUTDOOR_PRODUCTS: OutdoorProduct[] = [
       colorway: 'Forest Emerald & Charcoal Gray',
       weatherRating: 'Tropical High-Humidity & Rain Proof'
     },
-    image: '/src/assets/images/wolf_ripstop_hammock_1793274337239.jpg',
+    image: '/images/wolf_ripstop_hammock_1793274337239.jpg',
     colors: [
       { name: 'Forest Emerald', hex: '#047857' },
       { name: 'Volcanic Charcoal', hex: '#1c222e' },
@@ -64,7 +64,7 @@ export const OUTDOOR_PRODUCTS: OutdoorProduct[] = [
       colorway: 'Stealth Charcoal with Signal Orange Trim',
       weatherRating: 'Gale Resistance up to 60 km/h winds'
     },
-    image: '/src/assets/images/wolf_summit_dome_tent_1793274339629.jpg',
+    image: '/images/wolf_summit_dome_tent_1793274339629.jpg',
     colors: [
       { name: 'Stealth Charcoal', hex: '#1e232d' },
       { name: 'Alpine Moss', hex: '#064e3b' }
@@ -96,7 +96,7 @@ export const OUTDOOR_PRODUCTS: OutdoorProduct[] = [
       colorway: 'Charcoal Heather / Deep Emerald Panels',
       weatherRating: 'Tropical High Heat & Humidity'
     },
-    image: '/src/assets/images/wolf_trail_apparel_shirt_1793274337408.jpg',
+    image: '/images/wolf_trail_apparel_shirt_1793274337408.jpg',
     sizes: ['XS', 'S', 'M', 'L', 'XL', '2XL'],
     colors: [
       { name: 'Emerald / Charcoal', hex: '#047857' },
@@ -159,7 +159,7 @@ export const OUTDOOR_PRODUCTS: OutdoorProduct[] = [
       dimensions: 'One Size Fits All (Adjustable 54-62cm)',
       colorway: 'Signal Orange / Charcoal'
     },
-    image: '/src/assets/images/mt_ulanin_summit_hero_1793274334661.jpg',
+    image: '/images/mt_ulanin_summit_hero_1793274334661.jpg',
     colors: [
       { name: 'Signal Orange', hex: '#ea580c' },
       { name: 'Deep Emerald', hex: '#047857' },
@@ -190,7 +190,7 @@ export const OUTDOOR_PRODUCTS: OutdoorProduct[] = [
       dimensions: 'Collapses to 64cm, extends to 135cm',
       capacity: 'Tested to 90kg vertical load per pole'
     },
-    image: '/src/assets/images/contest_sea_view_1793274395258.jpg',
+    image: '/images/contest_sea_view_1793274395258.jpg',
     colors: [
       { name: 'Matte Charcoal & Green', hex: '#047857' }
     ]
@@ -218,7 +218,7 @@ export const OUTDOOR_PRODUCTS: OutdoorProduct[] = [
       capacity: '20 Liters',
       weatherRating: 'IPX6 Waterproof (Heavy Rain & Brief Immersion)'
     },
-    image: '/src/assets/images/contest_city_lights_1793274395372.jpg',
+    image: '/images/contest_city_lights_1793274395372.jpg',
     colors: [
       { name: 'Signal Orange', hex: '#ea580c' },
       { name: 'Deep Emerald', hex: '#047857' },
@@ -251,7 +251,7 @@ export const OUTDOOR_PRODUCTS: OutdoorProduct[] = [
       weatherRating: 'IPX4 Water Resistant',
       capacity: '1200mAh Rechargeable Battery'
     },
-    image: '/src/assets/images/camp_fest_event_banner_1793274335544.jpg',
+    image: '/images/camp_fest_event_banner.jpg',
     colors: [
       { name: 'Charcoal / Emerald Accent', hex: '#047857' }
     ]

@@ -15,7 +15,7 @@ export const OFFICIAL_RECOMMENDATIONS: CustomerRecommendation[] = [
   {
     id: 'rec-kirk-dimatatac',
     author: 'Kirk Villegas Dimatatac',
-    avatar: '/public/assets/aistudio/image_f2e71c73.png',
+    avatar: '/images/kirk_dimatatac_review.png',
     date: 'May 21, 2025',
     verifiedSource: 'Facebook Page',
     gearTagged: 'WOLF Technical Trail Apparel',

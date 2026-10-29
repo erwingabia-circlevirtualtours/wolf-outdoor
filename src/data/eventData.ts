@@ -17,8 +17,8 @@ export const CAMP_FEST_CONFIG = {
   elevation: '710 MASL (Meters Above Sea Level)',
   trailClass: 'Class 1-2 (Moderate Ridge Climb / Technical Singletrack for MTB)',
   dates: 'November 14 - 15, 2026 (Saturday - Sunday)',
-  bannerImage: '/src/assets/images/camp_fest_event_banner_1793274335544.jpg',
-  trailHeroImage: '/src/assets/images/mt_ulanin_summit_hero_1793274334661.jpg',
+  bannerImage: '/images/camp_fest_event_banner.jpg',
+  trailHeroImage: '/images/mt_ulanin_summit_hero.jpg',
   registrationFees: {
     Hiker: 650,
     'Mountain Biker': 750,

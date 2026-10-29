@@ -123,7 +123,7 @@ export const RecommendationsSection: React.FC = () => {
             <div className="flex items-center gap-3.5">
               <div className="w-12 h-12 rounded-full overflow-hidden border-2 border-emerald-500/80 bg-slate-800 shrink-0">
                 <img
-                  src="/public/assets/aistudio/image_f2e71c73.png"
+                  src="/images/kirk_dimatatac_review.png"
                   alt="Kirk Villegas Dimatatac recommendation"
                   className="w-full h-full object-cover object-left"
                 />

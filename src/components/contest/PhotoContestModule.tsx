@@ -35,7 +35,7 @@ export const PhotoContestModule: React.FC = () => {
   const [trailSpot, setTrailSpot] = useState('Mt. Ulanin Summit (710 MASL)');
   const [caption, setCaption] = useState('');
   const [selectedImagePreview, setSelectedImagePreview] = useState<string>(
-    '/src/assets/images/mt_ulanin_summit_hero_1793274334661.jpg'
+    '/images/mt_ulanin_summit_hero.jpg'
   );
 
   useEffect(() => {
@@ -395,9 +395,9 @@ export const PhotoContestModule: React.FC = () => {
                 <div className="text-[11px] text-slate-400 mb-1">Or choose an authentic Mt. Ulanin capture:</div>
                 <div className="grid grid-cols-3 gap-2">
                   {[
-                    { label: 'Summit 710M', src: '/src/assets/images/mt_ulanin_summit_hero_1793274334661.jpg' },
-                    { label: 'Verde Sea', src: '/src/assets/images/contest_sea_view_1793274395258.jpg' },
-                    { label: 'City Twilight', src: '/src/assets/images/contest_city_lights_1793274395372.jpg' },
+                    { label: 'Summit 710M', src: '/images/mt_ulanin_summit_hero.jpg' },
+                    { label: 'Verde Sea', src: '/images/contest_sea_view.jpg' },
+                    { label: 'City Twilight', src: '/images/contest_city_lights.jpg' },
                   ].map((preset) => (
                     <button
                       type="button"
