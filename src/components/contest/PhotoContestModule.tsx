@@ -224,12 +224,19 @@ export const PhotoContestModule: React.FC = () => {
               >
                 {/* Photo Container */}
                 <div className="relative aspect-[4/3] bg-[#0c0e12] overflow-hidden">
-                  <img
-                    src={submission.imageUrl}
-                    alt={submission.title}
-                    referrerPolicy="no-referrer"
-                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                  />
+                  <picture>
+                    <source srcSet={submission.imageUrl.replace(/\.(jpg|jpeg|png)$/i, '.webp')} type="image/webp" />
+                    <img
+                      src={submission.imageUrl}
+                      alt={submission.title}
+                      loading="lazy"
+                      decoding="async"
+                      width={600}
+                      height={450}
+                      referrerPolicy="no-referrer"
+                      className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                    />
+                  </picture>
 
                   {/* Category Badge */}
                   <span className="absolute top-3 left-3 px-2.5 py-0.5 bg-[#0e1015]/90 border border-white/10 text-white font-mono text-[10px] font-bold uppercase rounded">

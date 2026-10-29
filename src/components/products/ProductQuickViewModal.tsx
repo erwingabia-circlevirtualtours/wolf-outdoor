@@ -52,12 +52,19 @@ export const ProductQuickViewModal: React.FC<ProductQuickViewModalProps> = ({ pr
             
             {/* Image Preview */}
             <div className="rounded-xl overflow-hidden bg-[#0c0e12] border border-[#232938] aspect-[4/3] relative">
-              <img
-                src={product.image}
-                alt={product.name}
-                referrerPolicy="no-referrer"
-                className="w-full h-full object-cover"
-              />
+              <picture>
+                <source srcSet={product.image.replace(/\.(jpg|jpeg|png)$/i, '.webp')} type="image/webp" />
+                <img
+                  src={product.image}
+                  alt={product.name}
+                  loading="lazy"
+                  decoding="async"
+                  width={600}
+                  height={450}
+                  referrerPolicy="no-referrer"
+                  className="w-full h-full object-cover"
+                />
+              </picture>
               {product.badge && (
                 <span className="absolute top-3 left-3 px-2.5 py-1 bg-emerald-700 text-white font-mono text-[11px] font-bold uppercase tracking-wider rounded">
                   {product.badge}

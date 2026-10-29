@@ -53,12 +53,19 @@ export const CampFestCenter: React.FC<CampFestCenterProps> = ({
         {/* Feature Event Banner & Key Facts Card */}
         <div className="relative rounded-2xl overflow-hidden border border-[#273040] bg-[#141820] mb-14">
           <div className="relative aspect-[16/9] md:aspect-[21/9] w-full overflow-hidden">
-            <img
-              src="/images/camp_fest_event_banner.jpg"
-              alt="Mt. Ulanin Camp Fest 2026 Twilight Summit"
-              referrerPolicy="no-referrer"
-              className="w-full h-full object-cover"
-            />
+            <picture>
+              <source srcSet="/images/camp_fest_event_banner.webp" type="image/webp" />
+              <img
+                src="/images/camp_fest_event_banner.jpg"
+                alt="Mt. Ulanin Camp Fest 2026 Twilight Summit"
+                loading="lazy"
+                decoding="async"
+                width={1200}
+                height={514}
+                referrerPolicy="no-referrer"
+                className="w-full h-full object-cover"
+              />
+            </picture>
             <div className="absolute inset-0 bg-gradient-to-t from-[#0e1015] via-[#0e1015]/40 to-transparent" />
             
             {/* Overlay Info Card */}

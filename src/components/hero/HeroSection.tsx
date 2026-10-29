@@ -16,12 +16,19 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
     <section id="hero" className="relative bg-[#0c0e12] overflow-hidden">
       {/* High-Resolution Mt. Ulanin Background Banner with Measured Scrim */}
       <div className="absolute inset-0 z-0">
-        <img
-          src="/images/mt_ulanin_summit_hero.jpg"
-          alt="Mt. Ulanin 710 MASL Summit View in Brgy. Cumba Batangas City"
-          referrerPolicy="no-referrer"
-          className="w-full h-full object-cover object-center scale-105 transform motion-safe:transition-transform motion-safe:duration-1000"
-        />
+        <picture>
+          <source srcSet="/images/mt_ulanin_summit_hero.webp" type="image/webp" />
+          <img
+            src="/images/mt_ulanin_summit_hero.jpg"
+            alt="Mt. Ulanin 710 MASL Summit View in Brgy. Cumba Batangas City"
+            referrerPolicy="no-referrer"
+            fetchPriority="high"
+            decoding="async"
+            width={1920}
+            height={1080}
+            className="w-full h-full object-cover object-center scale-105 transform motion-safe:transition-transform motion-safe:duration-1000"
+          />
+        </picture>
         {/* Measured dark gradient scrim for WCAG AA readability */}
         <div className="absolute inset-0 bg-gradient-to-r from-[#0c0e12]/95 via-[#0c0e12]/80 to-[#0c0e12]/50" />
         <div className="absolute inset-0 bg-gradient-to-t from-[#0c0e12] via-transparent to-[#0c0e12]/40" />

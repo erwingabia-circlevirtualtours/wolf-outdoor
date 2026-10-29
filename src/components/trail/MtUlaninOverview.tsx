@@ -62,18 +62,34 @@ export const MtUlaninOverview: React.FC = () => {
           {/* Main Display Visual */}
           <div className="lg:col-span-7 space-y-4">
             <div className="relative rounded-2xl overflow-hidden border border-[#273040] bg-[#141820] aspect-[16/10] group">
-              <img
-                src={
-                  activeTab === 'views'
-                    ? '/images/contest_sea_view.jpg'
-                    : activeTab === 'habitat'
-                    ? '/images/wolf_ripstop_hammock.jpg'
-                    : '/images/mt_ulanin_summit_hero.jpg'
-                }
-                alt="Mt. Ulanin Landscape in Brgy. Cumba"
-                referrerPolicy="no-referrer"
-                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-              />
+              <picture>
+                <source
+                  srcSet={
+                    activeTab === 'views'
+                      ? '/images/contest_sea_view.webp'
+                      : activeTab === 'habitat'
+                      ? '/images/wolf_ripstop_hammock.webp'
+                      : '/images/mt_ulanin_summit_hero.webp'
+                  }
+                  type="image/webp"
+                />
+                <img
+                  src={
+                    activeTab === 'views'
+                      ? '/images/contest_sea_view.jpg'
+                      : activeTab === 'habitat'
+                      ? '/images/wolf_ripstop_hammock.jpg'
+                      : '/images/mt_ulanin_summit_hero.jpg'
+                  }
+                  alt="Mt. Ulanin Landscape in Brgy. Cumba"
+                  loading="lazy"
+                  decoding="async"
+                  width={800}
+                  height={500}
+                  referrerPolicy="no-referrer"
+                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                />
+              </picture>
               <div className="absolute inset-0 bg-gradient-to-t from-[#0e1015] via-transparent to-black/20" />
               
               <div className="absolute bottom-4 left-4 right-4 flex items-center justify-between text-xs text-slate-200 bg-[#0e1015]/80 backdrop-blur-md px-4 py-2.5 rounded-lg border border-white/10">

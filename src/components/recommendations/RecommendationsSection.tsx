@@ -125,6 +125,10 @@ export const RecommendationsSection: React.FC = () => {
                 <img
                   src="/images/kirk_dimatatac_review.png"
                   alt="Kirk Villegas Dimatatac recommendation"
+                  loading="lazy"
+                  decoding="async"
+                  width={48}
+                  height={48}
                   className="w-full h-full object-cover object-left"
                 />
               </div>

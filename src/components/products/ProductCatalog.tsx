@@ -139,12 +139,19 @@ export const ProductCatalog: React.FC<ProductCatalogProps> = ({ initialCategory 
               >
                 {/* Product Image Slot */}
                 <div className="relative aspect-[4/3] bg-[#0c0e12] overflow-hidden">
-                  <img
-                    src={product.image}
-                    alt={product.name}
-                    referrerPolicy="no-referrer"
-                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                  />
+                  <picture>
+                    <source srcSet={product.image.replace(/\.(jpg|jpeg|png)$/i, '.webp')} type="image/webp" />
+                    <img
+                      src={product.image}
+                      alt={product.name}
+                      loading="lazy"
+                      decoding="async"
+                      width={400}
+                      height={300}
+                      referrerPolicy="no-referrer"
+                      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                    />
+                  </picture>
 
                   {/* Badge */}
                   {product.badge && (
