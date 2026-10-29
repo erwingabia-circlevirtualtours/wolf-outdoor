@@ -1,0 +1,8 @@
+{
+  "name": "wolf outdoor",
+  "description": "WOLF Outdoor Batangas City - Rugged outdoor apparel, camping hammocks, tents, and Mt. Ulanin Camp Fest 2026 coordinator.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}

@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <!-- Sky background -->
+  <rect width="512" height="512" rx="64" fill="#9cdcf6" />
+  
+  <!-- Golden Sun Disk -->
+  <circle cx="256" cy="180" r="165" fill="#f5a623" stroke="#000000" stroke-width="14" />
+  
+  <!-- Mountain W Peaks (Emerald Green with Black Outline) -->
+  <path 
+    d="M 0 512 L 0 32 L 128 340 L 256 32 L 384 340 L 512 32 L 512 512 Z" 
+    fill="#047857" 
+    stroke="#000000" 
+    stroke-width="16" 
+    stroke-linejoin="round"
+  />
+
+  <!-- Inner Sky Blue Mountain V-Cuts -->
+  <polygon points="128,340 0,32 50,180" fill="#9cdcf6" opacity="0.6" />
+  <polygon points="384,340 512,32 462,180" fill="#9cdcf6" opacity="0.6" />
+
+  <!-- Clean Mountain W Ridge Line Overlay -->
+  <polyline 
+    points="0,32 128,340 256,32 384,340 512,32" 
+    fill="none" 
+    stroke="#000000" 
+    stroke-width="20" 
+    stroke-linecap="round" 
+    stroke-linejoin="round" 
+  />
+</svg>
