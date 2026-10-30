@@ -22,6 +22,11 @@ export const Footer: React.FC<FooterProps> = ({
               <img
                 src="/wolf_outdoor_logo.jpg"
                 alt="WOLF Outdoor Batangas City"
+                width={40}
+                height={40}
+                loading="lazy"
+                decoding="async"
+                referrerPolicy="no-referrer"
                 className="w-10 h-10 object-contain rounded-md border border-emerald-900/60 bg-emerald-950/40 p-0.5"
               />
               <div>
