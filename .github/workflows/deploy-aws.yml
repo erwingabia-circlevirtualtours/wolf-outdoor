@@ -1,0 +1,55 @@
+name: Deploy WOLF Outdoor to AWS S3 & CloudFront
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Source Code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+
+      - name: Install Dependencies
+        run: npm ci
+
+      - name: Type Check & Build
+        run: npm run build
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ secrets.AWS_REGION || 'ap-southeast-1' }}
+
+      - name: Sync Static Assets to AWS S3 (Long-term cache)
+        run: |
+          aws s3 sync dist/assets s3://${{ secrets.AWS_S3_BUCKET }}/assets \
+            --delete \
+            --cache-control "public, max-age=31536000, immutable"
+
+      - name: Sync Root Files to AWS S3 (No-cache for instant updates)
+        run: |
+          aws s3 sync dist/ s3://${{ secrets.AWS_S3_BUCKET }} \
+            --exclude "assets/*" \
+            --delete \
+            --cache-control "public, max-age=0, must-revalidate"
+
+      - name: Invalidate CloudFront Cache
+        if: env.AWS_CLOUDFRONT_DISTRIBUTION_ID != ''
+        env:
+          AWS_CLOUDFRONT_DISTRIBUTION_ID: ${{ secrets.AWS_CLOUDFRONT_DISTRIBUTION_ID }}
+        run: |
+          aws cloudfront create-invalidation \
+            --distribution-id ${{ secrets.AWS_CLOUDFRONT_DISTRIBUTION_ID }} \
+            --paths "/*"
