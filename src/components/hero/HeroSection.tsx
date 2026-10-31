@@ -22,7 +22,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
             src="/images/mt_ulanin_summit_hero.jpg"
             alt="Mt. Ulanin 710 MASL Summit View in Brgy. Cumba Batangas City"
             referrerPolicy="no-referrer"
-            fetchPriority="high"
+            {...({ fetchpriority: 'high' } as any)}
             decoding="async"
             width={1920}
             height={1080}

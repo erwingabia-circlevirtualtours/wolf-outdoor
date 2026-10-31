@@ -1,5 +1,6 @@
 import React from 'react';
-import { Mountain, MapPin, ExternalLink, Heart, Shield, Compass } from 'lucide-react';
+import { Mountain, MapPin, ExternalLink, Heart, Shield, Compass, ShieldCheck } from 'lucide-react';
+import { useStore } from '../../context/StoreContext';
 
 interface FooterProps {
   onNavigateSection: (sectionId: string) => void;
@@ -10,6 +11,7 @@ export const Footer: React.FC<FooterProps> = ({
   onNavigateSection,
   onOpenCampFestRegistration
 }) => {
+  const { setIsAdminOpen } = useStore();
   return (
     <footer className="bg-[#080a0d] border-t border-[#1d222e] text-slate-400 text-xs">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
@@ -205,13 +207,22 @@ export const Footer: React.FC<FooterProps> = ({
             <span>All Rights Reserved.</span>
           </div>
 
-          <div className="flex items-center gap-3">
+          <div className="flex flex-wrap items-center gap-3">
             <span className="flex items-center gap-1 text-slate-400">
               <MapPin className="w-3 h-3 text-emerald-400" />
               <span>13.7565° N, 121.0583° E</span>
             </span>
             <span>·</span>
             <span className="text-emerald-400 font-bold">710 MASL Elevation</span>
+            <span>·</span>
+            <button
+              onClick={() => setIsAdminOpen(true)}
+              className="inline-flex items-center gap-1 text-slate-500 hover:text-emerald-400 transition-colors focus:outline-none"
+              title="Open Staff CMS (PIN: wolf2026)"
+            >
+              <ShieldCheck className="w-3 h-3 text-emerald-500" />
+              <span>Staff Portal</span>
+            </button>
           </div>
         </div>
 

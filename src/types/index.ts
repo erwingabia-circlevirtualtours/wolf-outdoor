@@ -85,3 +85,36 @@ export interface CartItem {
   selectedSize?: string;
   selectedColor?: string;
 }
+
+export type OrderStatus = 'pending_payment' | 'verified' | 'preparing' | 'dispatched' | 'completed' | 'cancelled';
+
+export interface StoreOrder {
+  id: string;
+  createdAt: string;
+  customerName: string;
+  phone: string;
+  email?: string;
+  address?: string;
+  cityRegion: string;
+  deliveryMethod: 'standard' | 'pickup';
+  paymentOption: 'GCash' | 'Maya' | 'Cash on Delivery (COD)';
+  paymentReference?: string;
+  items: CartItem[];
+  subtotal: number;
+  discount: number;
+  shipping: number;
+  total: number;
+  status: OrderStatus;
+  staffNotes?: string;
+}
+
+export interface StoreAnnouncement {
+  badge: string;
+  headline: string;
+  subtext: string;
+  highlightText: string;
+  contactNumber: string;
+  promoCode: string;
+  freeShippingThreshold: number;
+  isActive: boolean;
+}

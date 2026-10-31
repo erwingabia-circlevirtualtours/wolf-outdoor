@@ -1,6 +1,15 @@
 import React, { useState } from 'react';
 import { useCart } from '../../context/CartContext';
-import { X, CheckCircle2, ShieldCheck, MapPin, Phone, User, Mail, Truck, QrCode } from 'lucide-react';
+import { useStore } from '../../context/StoreContext';
+import { 
+  X, CheckCircle2, ShieldCheck, MapPin, Phone, User, Mail, 
+  Truck, QrCode, AlertCircle, Copy, Check 
+} from 'lucide-react';
+import { 
+  validateGcashReferenceInput, 
+  formatGcashReferenceDisplay, 
+  sanitizeGcashReference 
+} from '../../lib/validations';
 
 export const CheckoutModal: React.FC = () => {
   const {
@@ -13,6 +22,7 @@ export const CheckoutModal: React.FC = () => {
     setIsCheckoutOpen,
     completeCheckout
   } = useCart();
+  const { createOrder } = useStore();
 
   const [step, setStep] = useState<'form' | 'success'>('form');
   const [fullName, setFullName] = useState('');
@@ -22,9 +32,37 @@ export const CheckoutModal: React.FC = () => {
   const [cityRegion, setCityRegion] = useState('Batangas City');
   const [deliveryMethod, setDeliveryMethod] = useState<'standard' | 'pickup'>('standard');
   const [paymentOption, setPaymentOption] = useState<'GCash' | 'Maya' | 'Cash on Delivery (COD)'>('GCash');
+  
+  // GCash Reference & Validation state
+  const [gcashRef, setGcashRef] = useState('');
+  const [gcashRefError, setGcashRefError] = useState<string | null>(null);
+  const [isCopiedGcash, setIsCopiedGcash] = useState(false);
+
   const [orderId, setOrderId] = useState('');
+  const [finalGcashRef, setFinalGcashRef] = useState('');
 
   if (!isCheckoutOpen) return null;
+
+  const handleGcashRefChange = (val: string) => {
+    // Keep only numbers or clean string
+    const cleaned = sanitizeGcashReference(val);
+    setGcashRef(cleaned);
+    if (gcashRefError) {
+      setGcashRefError(null);
+    }
+  };
+
+  const handleCopyGcashNumber = () => {
+    navigator.clipboard.writeText('09563695062');
+    setIsCopiedGcash(true);
+    setTimeout(() => setIsCopiedGcash(false), 2000);
+  };
+
+  const handleUseSampleRef = () => {
+    const sample = '9021482019481';
+    setGcashRef(sample);
+    setGcashRefError(null);
+  };
 
   const handleOrderSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -32,8 +70,42 @@ export const CheckoutModal: React.FC = () => {
       return;
     }
 
+    let verifiedRef: string | undefined = undefined;
+
+    // Strict GCash Reference Runtime Validation with Zod
+    if (paymentOption === 'GCash') {
+      const gcashValidation = validateGcashReferenceInput(gcashRef);
+      if (!gcashValidation.isValid) {
+        setGcashRefError(gcashValidation.error || 'Please enter a valid 13-digit GCash reference number');
+        return;
+      }
+      verifiedRef = gcashValidation.cleaned;
+      setFinalGcashRef(verifiedRef);
+    }
+
     const generatedId = `WOLF-PH-${Math.floor(10000 + Math.random() * 90000)}`;
     setOrderId(generatedId);
+
+    // Save order into StoreContext
+    createOrder({
+      id: generatedId,
+      customerName: fullName.trim(),
+      phone: phone.trim(),
+      email: email.trim() || undefined,
+      address: address.trim() || undefined,
+      cityRegion,
+      deliveryMethod,
+      paymentOption,
+      paymentReference: verifiedRef,
+      items: [...cart],
+      subtotal,
+      discount,
+      shipping,
+      total,
+      staffNotes: `Order submitted via storefront checkout (${deliveryMethod === 'pickup' ? 'Basecamp Pickup' : 'CALABARZON Delivery'}).${
+        verifiedRef ? ` Customer submitted GCash Ref: ${verifiedRef}` : ''
+      }`
+    });
 
     await completeCheckout({
       orderId: generatedId,
@@ -53,7 +125,11 @@ export const CheckoutModal: React.FC = () => {
   const handleClose = () => {
     setIsCheckoutOpen(false);
     setStep('form');
+    setGcashRef('');
+    setGcashRefError(null);
   };
+
+  const isGcashValidLength = sanitizeGcashReference(gcashRef).length === 13;
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/85 backdrop-blur-md animate-fade-in text-slate-100">
@@ -72,7 +148,7 @@ export const CheckoutModal: React.FC = () => {
                 WOLF Outdoor Gear Checkout
               </h3>
               <p className="text-xs text-emerald-400 font-mono">
-                Direct Dispatch from Batangas City
+                Direct Dispatch from Batangas City · Deterministic FSM
               </p>
             </div>
           </div>
@@ -223,6 +299,95 @@ export const CheckoutModal: React.FC = () => {
                 </div>
               </div>
 
+              {/* GCash Verification Card & Input */}
+              {paymentOption === 'GCash' && (
+                <div className="p-4 rounded-xl bg-[#0e1015] border border-emerald-900/60 space-y-3">
+                  <div className="flex items-center justify-between border-b border-[#222a3a] pb-2">
+                    <div className="flex items-center gap-2">
+                      <div className="w-6 h-6 rounded-md bg-blue-600 flex items-center justify-center font-bold text-white text-xs">
+                        G
+                      </div>
+                      <span className="text-xs font-bold text-white uppercase tracking-wider">
+                        Official WOLF Outdoor GCash Settlement
+                      </span>
+                    </div>
+                    <span className="text-[11px] font-mono text-emerald-400 bg-emerald-950/40 px-2 py-0.5 rounded border border-emerald-800/40">
+                      Amount: ₱{total.toLocaleString()}
+                    </span>
+                  </div>
+
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs font-mono bg-[#141820] p-3 rounded-lg border border-[#222a3a]">
+                    <div>
+                      <span className="text-slate-400 block text-[10px]">Merchant Name:</span>
+                      <strong className="text-white">WOLF OUTDOOR / ERWIN D.</strong>
+                    </div>
+                    <div>
+                      <span className="text-slate-400 block text-[10px]">GCash Mobile Number:</span>
+                      <div className="flex items-center gap-2 mt-0.5">
+                        <strong className="text-emerald-400 tracking-wider">0956 369 5062</strong>
+                        <button
+                          type="button"
+                          onClick={handleCopyGcashNumber}
+                          className="p-1 rounded bg-[#202736] hover:bg-[#2b3548] text-slate-300 hover:text-white transition-colors"
+                          title="Copy GCash number"
+                        >
+                          {isCopiedGcash ? <Check className="w-3 h-3 text-emerald-400" /> : <Copy className="w-3 h-3" />}
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div>
+                    <div className="flex items-center justify-between mb-1">
+                      <label className="block text-xs font-medium text-slate-200">
+                        13-Digit GCash Reference Number <span className="text-orange-500">*</span>
+                      </label>
+                      <button
+                        type="button"
+                        onClick={handleUseSampleRef}
+                        className="text-[10px] text-emerald-400 hover:underline font-mono"
+                      >
+                        Paste Test Ref
+                      </button>
+                    </div>
+
+                    <div className="relative">
+                      <input
+                        type="text"
+                        maxLength={16}
+                        placeholder="e.g. 9021 4820 19481"
+                        value={formatGcashReferenceDisplay(gcashRef)}
+                        onChange={(e) => handleGcashRefChange(e.target.value)}
+                        className={`w-full px-3 py-2 text-xs font-mono bg-[#181d27] border ${
+                          gcashRefError 
+                            ? 'border-red-500 ring-1 ring-red-500' 
+                            : isGcashValidLength 
+                              ? 'border-emerald-500 ring-1 ring-emerald-500/50' 
+                              : 'border-[#273040] focus:border-emerald-500'
+                        } rounded-lg text-white outline-none tracking-widest`}
+                      />
+                      {isGcashValidLength && (
+                        <div className="absolute right-3 top-1/2 -translate-y-1/2 flex items-center gap-1 text-emerald-400 text-[11px] font-mono">
+                          <CheckCircle2 className="w-4 h-4" />
+                          <span>13 Digits</span>
+                        </div>
+                      )}
+                    </div>
+
+                    {gcashRefError ? (
+                      <p className="text-[11px] text-red-400 mt-1 font-mono flex items-center gap-1">
+                        <AlertCircle className="w-3 h-3 shrink-0" />
+                        <span>{gcashRefError}</span>
+                      </p>
+                    ) : (
+                      <p className="text-[10px] text-slate-400 mt-1 font-mono">
+                        Found in your GCash SMS or in-app payment receipt. Enforced by Zod runtime schema.
+                      </p>
+                    )}
+                  </div>
+                </div>
+              )}
+
               {/* Order Breakdown */}
               <div className="p-3.5 rounded-xl bg-[#0e1015] border border-[#232938] space-y-1.5 text-xs font-mono text-slate-300">
                 <div className="flex justify-between">
@@ -296,6 +461,12 @@ export const CheckoutModal: React.FC = () => {
                   <span className="text-slate-400">Settlement:</span>
                   <span className="text-white font-bold">{paymentOption}</span>
                 </div>
+                {finalGcashRef && (
+                  <div className="flex justify-between">
+                    <span className="text-slate-400">GCash Ref:</span>
+                    <span className="text-emerald-400 font-bold">{finalGcashRef}</span>
+                  </div>
+                )}
                 <div className="flex justify-between">
                   <span className="text-slate-400">Fulfillment:</span>
                   <span className="text-slate-300">{deliveryMethod === 'pickup' ? 'Batangas City Pickup' : `Courier to ${cityRegion}`}</span>

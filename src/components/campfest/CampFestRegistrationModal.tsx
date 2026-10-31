@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { X, CheckCircle2, QrCode, Shield, Phone, User, Calendar, MapPin, AlertCircle, Download } from 'lucide-react';
 import { CampCategory, CampRegistration } from '../../types';
 import { CAMP_FEST_CONFIG } from '../../data/eventData';
+import { useStore } from '../../context/StoreContext';
 import confetti from 'canvas-confetti';
 
 interface CampFestRegistrationModalProps {
@@ -15,6 +16,7 @@ export const CampFestRegistrationModal: React.FC<CampFestRegistrationModalProps>
   onClose,
   onRegistrationSuccess
 }) => {
+  const { createRegistration } = useStore();
   const [step, setStep] = useState<'form' | 'success'>('form');
   const [joinerName, setJoinerName] = useState('');
   const [contactNumber, setContactNumber] = useState('');
@@ -62,6 +64,7 @@ export const CampFestRegistrationModal: React.FC<CampFestRegistrationModalProps>
     };
 
     try {
+      createRegistration(newRegistration);
       // Save in localStorage so joiners can review their pass
       const stored = localStorage.getItem('wolf_campfest_registrations');
       const list = stored ? JSON.parse(stored) : [];

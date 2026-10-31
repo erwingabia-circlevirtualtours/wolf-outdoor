@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { StoreProvider } from './context/StoreContext';
 import { CartProvider } from './context/CartContext';
 import { AnnouncementBar } from './components/layout/AnnouncementBar';
 import { Navbar } from './components/layout/Navbar';
@@ -12,6 +13,7 @@ import { PhotoContestModule } from './components/contest/PhotoContestModule';
 import { RecommendationsSection } from './components/recommendations/RecommendationsSection';
 import { CartDrawer } from './components/cart/CartDrawer';
 import { CheckoutModal } from './components/cart/CheckoutModal';
+import { AdminDashboard } from './components/admin/AdminDashboard';
 
 export const AppContent: React.FC = () => {
   const [isCampFestModalOpen, setIsCampFestModalOpen] = useState(false);
@@ -68,19 +70,20 @@ export const AppContent: React.FC = () => {
 
       </main>
 
-      {/* Footer with Official Facebook Link & Habitat Coordinates */}
+      {/* Footer with Official Facebook Link, Habitat Coordinates & Staff Portal */}
       <Footer
         onNavigateSection={handleNavigateSection}
         onOpenCampFestRegistration={() => setIsCampFestModalOpen(true)}
       />
 
-      {/* Modals & Drawers */}
+      {/* Modals, Drawers & Admin CMS */}
       <CartDrawer />
       <CheckoutModal />
       <CampFestRegistrationModal
         isOpen={isCampFestModalOpen}
         onClose={() => setIsCampFestModalOpen(false)}
       />
+      <AdminDashboard />
 
     </div>
   );
@@ -88,8 +91,10 @@ export const AppContent: React.FC = () => {
 
 export default function App() {
   return (
-    <CartProvider>
-      <AppContent />
-    </CartProvider>
+    <StoreProvider>
+      <CartProvider>
+        <AppContent />
+      </CartProvider>
+    </StoreProvider>
   );
 }

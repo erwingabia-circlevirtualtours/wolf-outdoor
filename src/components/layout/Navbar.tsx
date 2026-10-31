@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
-import { ShoppingBag, Menu, X, Camera, Tent, Mountain, Compass } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { ShoppingBag, Menu, X, Camera, Tent, Mountain, Compass, ShieldCheck } from 'lucide-react';
 import { useCart } from '../../context/CartContext';
+import { useStore } from '../../context/StoreContext';
 
 interface NavbarProps {
   onOpenCampFestRegistration: () => void;
@@ -12,7 +13,20 @@ export const Navbar: React.FC<NavbarProps> = ({
   onNavigateSection,
 }) => {
   const { totalItems, setIsCartOpen } = useCart();
+  const { setIsAdminOpen } = useStore();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
+  // Keyboard shortcut: Ctrl+Shift+A or Cmd+Shift+A opens Admin Portal
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if ((e.ctrlKey || e.metaKey) && e.shiftKey && (e.key === 'A' || e.key === 'a')) {
+        e.preventDefault();
+        setIsAdminOpen(true);
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [setIsAdminOpen]);
 
   const handleNavClick = (sectionId: string) => {
     onNavigateSection(sectionId);
@@ -96,8 +110,18 @@ export const Navbar: React.FC<NavbarProps> = ({
             </button>
           </nav>
 
-          {/* Zone 3: 1 Primary Action + Cart trigger */}
-          <div className="flex items-center gap-3 shrink-0">
+          {/* Zone 3: 1 Primary Action + Cart trigger + Staff CMS */}
+          <div className="flex items-center gap-2.5 shrink-0">
+            {/* Staff CMS Portal Trigger */}
+            <button
+              onClick={() => setIsAdminOpen(true)}
+              title="WOLF Basecamp Staff Portal (PIN: wolf2026)"
+              className="p-2.5 rounded-lg text-slate-400 hover:text-emerald-400 bg-[#161a22] hover:bg-[#1f2532] border border-[#2b3344] hover:border-emerald-500/50 transition-colors focus:outline-none"
+              aria-label="Staff Admin CMS Portal"
+            >
+              <ShieldCheck className="w-5 h-5" />
+            </button>
+
             {/* Gear Cart Button */}
             <button
               onClick={() => setIsCartOpen(true)}
@@ -176,6 +200,16 @@ export const Navbar: React.FC<NavbarProps> = ({
               className="flex items-center gap-3 px-3 py-2.5 text-sm font-medium text-slate-200 hover:bg-[#1a202c] rounded-md text-left"
             >
               <span>Event Sponsors</span>
+            </button>
+            <button
+              onClick={() => {
+                setMobileMenuOpen(false);
+                setIsAdminOpen(true);
+              }}
+              className="flex items-center gap-3 px-3 py-2.5 text-sm font-mono text-emerald-400 hover:bg-[#1a202c] rounded-md text-left border border-emerald-900/50 mt-1"
+            >
+              <ShieldCheck className="w-4 h-4 text-emerald-400" />
+              <span>Staff Admin Portal (PIN: wolf2026)</span>
             </button>
           </div>
 

@@ -1,8 +1,8 @@
 import React, { useState, useMemo } from 'react';
 import { Search, ShoppingBag, Eye, SlidersHorizontal, Check } from 'lucide-react';
-import { OUTDOOR_PRODUCTS } from '../../data/products';
 import { OutdoorProduct, ProductCategory } from '../../types';
 import { useCart } from '../../context/CartContext';
+import { useStore } from '../../context/StoreContext';
 import { ProductQuickViewModal } from './ProductQuickViewModal';
 
 interface ProductCatalogProps {
@@ -11,6 +11,7 @@ interface ProductCatalogProps {
 
 export const ProductCatalog: React.FC<ProductCatalogProps> = ({ initialCategory = 'all' }) => {
   const { addToCart } = useCart();
+  const { products } = useStore();
   const [selectedCategory, setSelectedCategory] = useState<ProductCategory>(initialCategory);
   const [searchQuery, setSearchQuery] = useState('');
   const [sortBy, setSortBy] = useState<'featured' | 'price-asc' | 'price-desc'>('featured');
@@ -26,7 +27,7 @@ export const ProductCatalog: React.FC<ProductCatalogProps> = ({ initialCategory 
   ];
 
   const filteredProducts = useMemo(() => {
-    return OUTDOOR_PRODUCTS.filter(product => {
+    return products.filter(product => {
       const matchesCategory = selectedCategory === 'all' || product.category === selectedCategory;
       const matchesSearch =
         product.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -38,7 +39,7 @@ export const ProductCatalog: React.FC<ProductCatalogProps> = ({ initialCategory 
       if (sortBy === 'price-desc') return b.price - a.price;
       return 0;
     });
-  }, [selectedCategory, searchQuery, sortBy]);
+  }, [products, selectedCategory, searchQuery, sortBy]);
 
   const handleQuickAdd = (product: OutdoorProduct, e: React.MouseEvent) => {
     e.stopPropagation();
